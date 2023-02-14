@@ -3,24 +3,27 @@ package test;
 import java.time.Duration;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
+
 
 /*
  * Java class that testing method consist in DemoUtil.java class
- * @author JCODER
+ * @author V.KOLESNIK
  * 
+ * @TestMethodOrder - allows you to set the order in which test will executed
+ * MethodOrderer.OrderAnnotation.class -> test will executed in order that give annotation @Order(1)
  */
-
-@DisplayNameGeneration (DisplayNameGenerator.Simple.class)
+@TestMethodOrder (MethodOrderer.OrderAnnotation.class)
 public class DemoUtilTest {
 	
 	DemoUtils demoUtils;
@@ -36,22 +39,7 @@ public class DemoUtilTest {
 		 System.out.println ("Running @AfterEach");
 	 }
 	 
-	 /*
-	 @BeforeAll
-	 static void setupBeforerAllClass () {
-		 System.out.println ("@BeforeAll");
-	 }
 	 
-	 @AfterAll
-	 static void setupAfterAllClass() {
-	 System.out.println ("@AfterAll");
-	 }
-     */
-	 
-	 
-	 /* assertEquals - > testing that 6 equals sum of number in method add
-	  * assertNotEquals -> testing that 6 not equals sum of number in method add 
-	  */
 	@Test
 	@DisplayName ("Equals and not Equals")
 	void testEqualsAndNotEquals () {
@@ -142,6 +130,40 @@ public class DemoUtilTest {
 	void testTimeout () {
 		Assertions.assertTimeoutPreemptively(Duration.ofSeconds(3), ()-> {demoUtils.checkTimeout();}, "Methoud should execute in 3 second");
 	}
+	
+	 /*
+	 @BeforeAll
+	 static void setupBeforerAllClass () {
+		 System.out.println ("@BeforeAll");
+	 }
+	 
+	 @AfterAll
+	 static void setupAfterAllClass() {
+	 System.out.println ("@AfterAll");
+	 }
+    */
+	 
+	 
+	 /* assertEquals - > testing that 6 equals sum of number in method add
+	  * assertNotEquals -> testing that 6 not equals sum of number in method add 
+	  */
+	 
+	 
+	 // @Disabled allows you to skip test
+	 @Test
+	 @Order (1)
+	 @Disabled ("Don't run until JIRA #123 is resolved")
+	 void oldTest() {
+		 
+	 }
+	 
+	 // @EnabledOnOs - allows you executed test on a particular OS
+	 @Test
+	 @Order (2)
+	 @EnabledOnOs  (OS.MAC)
+	 void testForMac() {
+		 
+	 }
 	
 }
 		

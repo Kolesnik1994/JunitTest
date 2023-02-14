@@ -6,6 +6,7 @@ import java.util.List;
  * Java Class consist method that have been tested in DemoUtilTest.java
  * @author JCODER 
  */
+
 public class DemoUtils {
 
     private String academy = "Luv2Code Academy";
