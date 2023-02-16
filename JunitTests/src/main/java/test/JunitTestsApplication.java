@@ -10,7 +10,7 @@ import test.model.CollegeStudent;
 import test.service.ApplicationService;
 
 // Main application class
-@SpringBootApplication
+@SpringBootApplication 
 public class JunitTestsApplication {
 
 	public static void main(String[] args) {
