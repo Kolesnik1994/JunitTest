@@ -3,14 +3,15 @@ package test.model;
 /**
  * Simple POJO java class that represent entity
  */
+
 public class CollegeStudent implements Student {
 	
 	private int id;
-	
+
 	private String firstname;
 	
 	private String lastname;
-	
+
 	private String emailAddress;
 	
 	private StudentGrades studentGrade;
@@ -81,6 +82,7 @@ public class CollegeStudent implements Student {
 		return getFirstname() + "" + getLastname();
 	}
 	
+	// private method which is being testing in /test/java/test/ReflectionTestUtils.java class 
 	private String getFirstNameAndId() {
 		return getFirstname() + "" + getId();	
 		}

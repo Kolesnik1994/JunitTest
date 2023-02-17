@@ -9,15 +9,18 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.MethodMode;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.support.AbstractContextLoader;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
 import test.model.CollegeStudent;
 import test.model.StudentGrades;
 
-@ContextConfiguration (loader= AnnotationConfigContextLoader.class, classes = JunitTestsApplication.class)
-@SpringBootTest 
+@SpringBootTest (classes = JunitTestsApplication.class)
 public class ReflectionTestUtils {
+	
 	
 	@Autowired
 	ApplicationContext context;
