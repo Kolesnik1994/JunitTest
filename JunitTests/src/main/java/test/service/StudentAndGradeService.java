@@ -15,11 +15,11 @@ public class StudentAndGradeService {
 	
 	@Autowired
 	private StudentDao studentDao;
-	
+
 	public void createStudent(String firstname, String lastname, String emailAddress) {
 		
 		CollegeStudent2 student = new CollegeStudent2 (firstname, lastname, emailAddress);
-		student.setId(0);
+		//student.setId(1); 
 		studentDao.save(student);
 	}
 	
