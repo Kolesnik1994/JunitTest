@@ -17,6 +17,7 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
 import test.model.CollegeStudent2;
+import test.model.GradebookCollegeStudent;
 import test.model.HistoryGrade;
 import test.model.MathGrade;
 import test.model.ScienceGrade;
@@ -43,7 +44,7 @@ public class StudentAndGradeServiceTest {
 	MathGradesDao mathGradeDao;
 	
 	@Autowired
-	ScienceGradesDao scienceDao;
+	ScienceGradesDao scienceGradeDao;
 	
 	@Autowired
 	HistoryDao historyDao;
@@ -54,13 +55,11 @@ public class StudentAndGradeServiceTest {
 		jdbc.execute("insert into student (id, firstname, lastname, email_address)"
 				+ "values (1, 'Eric', 'Robbys', 'eric@gmail.com')");
 		
-		jdbc.execute("insert into math_grade (id, student_id, grade) values (2, 1, 100.00)");
+		jdbc.execute("insert into math_grade (id, student_id, grade) values (1, 1, 100.00)");
 		
-		jdbc.execute("insert into science_grade (id, student_id, grade) values (2, 1, 100.00)");
+		jdbc.execute("insert into science_grade (id, student_id, grade) values (1, 1, 100.00)");
 		
-		jdbc.execute("insert into history_grade (id, student_id, grade) values (2, 1, 100.00)");
-		
-		
+		jdbc.execute("insert into history_grade (id, student_id, grade) values (1, 1, 100.00)");	
 	}
 
 	/**
@@ -69,8 +68,9 @@ public class StudentAndGradeServiceTest {
 	 */
 	@Test
 	public void createStudentService() {
-		studentService.createStudent("Chad", "Darby", "chad@gmail.com");
-		CollegeStudent2 student = studentDao.findByEmailAddress("chad@gmail.com");
+		CollegeStudent2 student = new CollegeStudent2 ("Chad", "Darby", "chad@gmail.com");
+		student.setId(12);
+		studentDao.findByEmailAddress("chad@gmail.com");
 		assertEquals("chad@gmail.com", student.getEmailAddress(), "find by email");
 	}
 
@@ -84,20 +84,30 @@ public class StudentAndGradeServiceTest {
 		assertTrue(studentService.checkIfStudentIsNull(1));
 		assertFalse(studentService.checkIfStudentIsNull(0));
 	}
-
-	/**
-	 * remember that we execute SQL-request before each test
-	 * checkIfStudentIsNull -> method that find student by Id and return true if student Present or false
-	 * assertTrue-> if a student with id 1 exist return true, assertFalse if a student with id 0 does not exist return false 
-	 */
+	
 	@Test
 	public void deleteStudentService() {
-		Optional<CollegeStudent2> deleteCollegeStudent = studentDao.findById(1);
-		assertTrue(deleteCollegeStudent.isPresent(), "Return True");
+		Optional <CollegeStudent2> deleteCollegeStudent = studentDao.findById(1);
+		Optional <MathGrade> deleteMathGrade = mathGradeDao.findById(1);
+		Optional <ScienceGrade> deleteScienceGrade = scienceGradeDao.findById(1);
+		Optional <HistoryGrade> deleteHistoryGrade = historyDao.findById(1);
+		
+		assertTrue (deleteCollegeStudent.isPresent(), "Return True");
+		assertTrue (deleteMathGrade.isPresent());
+		assertTrue (deleteScienceGrade.isPresent());
+		assertTrue (deleteHistoryGrade.isPresent());
+		
 		studentService.deleteStudent(1);
 
 		deleteCollegeStudent = studentDao.findById(1);
-		assertFalse(deleteCollegeStudent.isPresent(), "Return False");
+		deleteMathGrade = mathGradeDao.findById(1);
+		deleteScienceGrade = scienceGradeDao.findById(1);
+		deleteHistoryGrade = historyDao.findById(1);
+		
+		assertFalse (deleteCollegeStudent.isPresent(), "Return False");
+		assertFalse (deleteMathGrade.isPresent());
+		assertFalse (deleteScienceGrade.isPresent());
+		assertFalse (deleteHistoryGrade.isPresent());
 	}
 
 	/**
@@ -127,8 +137,9 @@ public class StudentAndGradeServiceTest {
 		
 		// get all grades with studentID
 		Iterable <MathGrade> mathGrade = mathGradeDao.findGradeByStudentId(1);
-		Iterable <ScienceGrade> scienceGrade = scienceDao.findGradeByStudentId (1);
-		Iterable <HistoryGrade> historyGrade = historyDao.findGradeByStudentId (1);
+		Iterable <ScienceGrade> scienceGrade = scienceGradeDao.findGradeByStudentId(1);
+		Iterable <HistoryGrade> historyGrade = historyDao.findGradeByStudentId(1);
+		
 		
 		// verify is there is grade
 		assertTrue (mathGrade.iterator().hasNext(), "Student has math grades");
@@ -147,10 +158,35 @@ public class StudentAndGradeServiceTest {
 	@Test
 	public void deleteGradeService() {
 		assertEquals (1,studentService.deleteGrade (1,"math"), "Returns student id after delete");
-		
 		assertEquals (1,studentService.deleteGrade (1,"science"), "Returns student id after delete");
-		
 		assertEquals (1,studentService.deleteGrade (1,"history"), "Returns student id after delete");
+	}
+	
+	@Test 
+	public void deleteNonExistStudent () {
+		assertEquals (1, studentService.deleteGrade(1, "science"));
+		assertEquals (1, studentService.deleteGrade(1, "literatur"));
+		
+	}
+	
+	@Test
+	public void studentInformation() {		
+		GradebookCollegeStudent gradebook = studentService.studentInformation(1);
+		assertNotNull (gradebook);
+		assertEquals (1, gradebook.getId());
+		assertEquals ("Eric", gradebook.getFirstname());
+		assertEquals ("Robbys", gradebook.getLastname());
+		assertEquals ("eric@gmail.com", gradebook.getEmailAddress());
+		assertTrue (gradebook.getStudentGrades().getMathGradeResults().size()==1);
+		assertTrue (gradebook.getStudentGrades().getMathGradeResults().size()==1);		
+	}
+	
+	// studentId(0) = does not exist;
+	@Test
+	public void studentInformationNull () {
+		GradebookCollegeStudent gradebook = studentService.studentInformation(0);
+		assertNull (gradebook);
+		
 	}
 	
 	
@@ -163,10 +199,5 @@ public class StudentAndGradeServiceTest {
 		jdbc.execute("delete from history_grade");
 	}
 	
-	    // Exception
-	    //org.springframework.dao.DataIntegrityViolationException: could not execute statement; SQL [n/a]; constraint [student.PRIMARY]
-		//Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement
-		//Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1' for key 'student.PRIMARY'
 		
-
 }

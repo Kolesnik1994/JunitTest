@@ -22,7 +22,6 @@ public class CollegeStudent2 implements Student {
 	private String emailAddress;
 
 	public CollegeStudent2() {
-
 	}
 
 	public CollegeStudent2(String firstname, String lastname, String emailAddress) {
