@@ -62,7 +62,7 @@ public class GradebookControllerTest {
 	@BeforeEach
 	public void beforeEach() {
 		jdbc.execute ("insert into student (id, firstname, lastname, email_address)"
-				+ "values (1, 'Eric', 'Robbys', 'eric@gmail.com')");
+				+ "values (21, 'Eric', 'Robbys', 'eric@gmail.com')");
 	}
 	
 	
@@ -91,6 +91,7 @@ public class GradebookControllerTest {
 	public void createStudentHttpRequest() throws Exception {
 		
 		CollegeStudent2 studentOne = new CollegeStudent2 ("Eric", "Robbys", "eric@gmail.com");
+		studentOne.setId(12);
 		List <CollegeStudent2> collegeStudentList = new ArrayList<> (Arrays.asList(studentOne));
 		when(studentService.getGradebook()).thenReturn(collegeStudentList);
 		Assertions.assertEquals (collegeStudentList, studentService.getGradebook());
@@ -111,12 +112,12 @@ public class GradebookControllerTest {
 	@Test
 	public void deleteStudentHttpRequest() throws Exception {
 		
-		Assertions.assertTrue (studentDao.findById(1).isPresent());
-		MvcResult mvcResult = mock.perform(MockMvcRequestBuilders.get("/delete/student/{id}", 1)).andExpect(status().isOk()).andReturn();
+		Assertions.assertTrue (studentDao.findById(21).isPresent());
+		MvcResult mvcResult = mock.perform(MockMvcRequestBuilders.get("/delete/student/{id}", 21)).andExpect(status().isOk()).andReturn();
 		ModelAndView mav = mvcResult.getModelAndView();
 		ModelAndViewAssert.assertViewName(mav, "index");
 		
-		Assertions.assertFalse(studentDao.findById(1).isPresent());
+		Assertions.assertFalse(studentDao.findById(21).isPresent());
 	}
 	
 	@Test

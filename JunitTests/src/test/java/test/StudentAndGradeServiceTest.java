@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.TestPropertySource;
@@ -48,18 +49,38 @@ public class StudentAndGradeServiceTest {
 	
 	@Autowired
 	HistoryDao historyDao;
-
+	// SQL scripts located in application.properties
+	@Value ("${sql.scripts.create.student}")
+	private String sqlAddStudent;
+	
+	@Value ("${sql.scripts.create.math.grade}")
+	private String sqlCreateMathGrade;
+	
+	@Value ("${sql.scripts.create.science.grade}")
+	private String sqlCreateScienceGrade;
+	
+	@Value ("${sql.scripts.create.history.grade}")
+	private String sqlCreateHistoryGrade;
+	
+	@Value ("${sql.scripts.delete.student}")
+	private String sqlDeleteStudent;
+	
+	@Value ("${sql.scripts.delete.math.grade}")
+	private String sqlDeleteMathGrade;
+	
+	@Value ("${sql.scripts.delete.science.grade}")
+	private String sqlDeleteScienceGrade;
+	
+	@Value ("${sql.scripts.delete.history.grade}")
+	private String sqlDeleteHistoryGrade;
+	
 	// before each test execute SQL-request to insert data in student table
 	@BeforeEach
 	public void setupDatabse() {
-		jdbc.execute("insert into student (id, firstname, lastname, email_address)"
-				+ "values (1, 'Eric', 'Robbys', 'eric@gmail.com')");
-		
-		jdbc.execute("insert into math_grade (id, student_id, grade) values (1, 1, 100.00)");
-		
-		jdbc.execute("insert into science_grade (id, student_id, grade) values (1, 1, 100.00)");
-		
-		jdbc.execute("insert into history_grade (id, student_id, grade) values (1, 1, 100.00)");	
+		jdbc.execute(sqlAddStudent);        // or jdbc.execute("insert into student (id, firstname, lastname, email_address) values (1, 'Eric', 'Robbys', 'eric@gmail.com')");
+		jdbc.execute(sqlCreateMathGrade);    // or jdbc.execute("insert into math_grade (id, student_id, grade) values (1, 1, 100.00)");
+		jdbc.execute(sqlCreateHistoryGrade); // or jdbc.execute("insert into science_grade (id, student_id, grade) values (1, 1, 100.00)");
+		jdbc.execute(sqlCreateScienceGrade); // or jdbc.execute("insert into history_grade (id, student_id, grade) values (1, 1, 100.00)");		
 	}
 
 	/**
@@ -189,14 +210,13 @@ public class StudentAndGradeServiceTest {
 		
 	}
 	
-	
 	// after each test execute SQL-request to delete data from student table
 	@AfterEach
 	public void setupAfterTransaction() {
-		jdbc.execute("delete from student");
-		jdbc.execute("delete from math_grade");
-		jdbc.execute("delete from science_grade");
-		jdbc.execute("delete from history_grade");
+		jdbc.execute (sqlDeleteStudent);   // or jdbc.execute ("delete from student");
+		jdbc.execute (sqlDeleteMathGrade); // or jdbc.execute ("delete from math_grade");
+		jdbc.execute (sqlDeleteScienceGrade );  //or jdbc.execute ("delete from science_grade");
+		jdbc.execute (sqlDeleteHistoryGrade);  // or jdbc.execute ("delete from history_grade");
 	}
 	
 		
