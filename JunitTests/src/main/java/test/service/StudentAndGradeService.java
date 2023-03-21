@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+
 import test.model.CollegeStudent2;
 import test.model.Grade;
 import test.model.GradebookCollegeStudent;
@@ -179,12 +181,37 @@ public class StudentAndGradeService {
 		 return gradebook;
 	}
 	
+	public void configureStudentInformation (int id, Model model) {
+		
+		GradebookCollegeStudent studentEntity = studentInformation(id);
+		
+		model.addAttribute ("student", studentEntity);	
+		if (studentEntity.getStudentGrades().getMathGradeResults().size()>0) {
+			model.addAttribute ("mathAverage", studentEntity.getStudentGrades().findGradePointAverage
+					(studentEntity.getStudentGrades().getMathGradeResults()));		
+		} else {
+			model.addAttribute("mathAverage", "N/A");
+		}
+		
+		if (studentEntity.getStudentGrades().getScienceGradeResults().size()>0) {
+			model.addAttribute ("scienceAverage", studentEntity.getStudentGrades().findGradePointAverage
+					(studentEntity.getStudentGrades().getHistoryGradeResults()));
+		} else {
+			model.addAttribute ("scienceAverage", "N/A");
+		}
+		
+		if (studentEntity.getStudentGrades().getHistoryGradeResults().size()>0) {
+			model.addAttribute ("historyAverage", studentEntity.getStudentGrades().findGradePointAverage
+					(studentEntity.getStudentGrades().getHistoryGradeResults()));
+		} else {
+			model.addAttribute ("historyAverage", "N/A");
+		}
 	}
 
-   //org.springframework.dao.DataIntegrityViolationException: could not execute statement; SQL [n/a]; constraint [student.PRIMARY]
-	//Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement
-	//Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '1' for key 'student.PRIMARY'
 	
+	}
+
+
 
 
 
