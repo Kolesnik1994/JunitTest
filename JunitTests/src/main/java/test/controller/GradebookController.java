@@ -87,11 +87,11 @@ public class GradebookController {
 		
 		int studentId = studentService.deleteGrade(id, gradeType);
 		
-		if (!studentService.checkIfStudentIsNull(studentId)) {      // was if (studentId == 0) { return "error"; }   
+		if (studentId == 0) {       
 			return "error";
 		}
                                 
-		studentService.configureStudentInformation(id, model);
+		studentService.configureStudentInformation(studentId, model);
 			
 		return "studentInformation";
 		

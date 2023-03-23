@@ -56,7 +56,7 @@ public class StudentAndGradeService {
 	
 	public void createStudent(String firstname, String lastname, String emailAddress) {	
 		CollegeStudent2 student = new CollegeStudent2 (firstname, lastname, emailAddress);
-		//student.setId(1); 
+		student.setId(0);  // was like in Tutorial
 		studentDao.save(student);
 	}
 	
@@ -119,7 +119,7 @@ public class StudentAndGradeService {
 	
 	public int deleteGrade (int id, String gradeType) {
 		
-		int studentId=1; // was studentId=0 l like in Tutorial
+		int studentId=0; // was studentId=0 l like in Tutorial
 		
 		if (gradeType.equals("math")) {
 			Optional <MathGrade> grade = mathGradeDao.findById(id);	
@@ -137,6 +137,7 @@ public class StudentAndGradeService {
 			}
 			studentId = grade.get().getStudentId();
 			scienceGradeDao.deleteById(id);
+			
 		}
 		
 		if (gradeType.equals("history")) {
@@ -153,11 +154,12 @@ public class StudentAndGradeService {
 	
 	public GradebookCollegeStudent studentInformation (int id)  {
 		
-		if (!checkIfStudentIsNull(id)) {
+		Optional <CollegeStudent2> student = studentDao.findById(id);
+		
+		if (!student.isPresent()) {
 			return null;
 		}
 		
-		Optional <CollegeStudent2> student = studentDao.findById(id);
 		Iterable <MathGrade> mathGrade = mathGradeDao.findGradeByStudentId(id);
 		Iterable <ScienceGrade> scienceGrade = scienceGradeDao.findGradeByStudentId(id);
 		Iterable <HistoryGrade> historyGrade = historyGradeDao.findGradeByStudentId(id);
@@ -186,6 +188,7 @@ public class StudentAndGradeService {
 		GradebookCollegeStudent studentEntity = studentInformation(id);
 		
 		model.addAttribute ("student", studentEntity);	
+		
 		if (studentEntity.getStudentGrades().getMathGradeResults().size()>0) {
 			model.addAttribute ("mathAverage", studentEntity.getStudentGrades().findGradePointAverage
 					(studentEntity.getStudentGrades().getMathGradeResults()));		
@@ -195,7 +198,7 @@ public class StudentAndGradeService {
 		
 		if (studentEntity.getStudentGrades().getScienceGradeResults().size()>0) {
 			model.addAttribute ("scienceAverage", studentEntity.getStudentGrades().findGradePointAverage
-					(studentEntity.getStudentGrades().getHistoryGradeResults()));
+					(studentEntity.getStudentGrades().getScienceGradeResults()));
 		} else {
 			model.addAttribute ("scienceAverage", "N/A");
 		}

@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 
 import test.dao.ApplicationDao;
-import test.model.CollegeStudent;
+import test.model.CollegeStudent2;
 import test.model.Grade;
 import test.model.HistoryGrade;
 import test.model.MathGrade;
@@ -25,8 +25,8 @@ public class JunitTestsApplication {
 	//Bean which is used in JunitTestsApplicaionTests.java class special to assert that expected and actual object do not refer to the same object 
 	@Bean(name ="collegeStudent")
 	@Scope(value ="prototype")
-	 CollegeStudent getCollegeStudent () {
-		return new CollegeStudent();}
+	 CollegeStudent2 getCollegeStudent () {
+		return new CollegeStudent2();}
 	
     @Bean (name ="applicationExample")
     ApplicationService getApplicationService () { return new ApplicationService();}

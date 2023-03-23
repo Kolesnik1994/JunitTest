@@ -124,6 +124,7 @@ margin: 10px;
         <td style =" display: flex;	justify-content: space-between; " > <span th:text="${student.emailAddress}" th:onclick="|studentInfo('${student.id}');|"></span>
         <span>
                
+                <a th:href = "@{/studentInformation/{id}(id=${student.id})}" class ="btn btn-outline-success"> View </a>
                 <a th:href = "@{/delete/student/{id}(id=${student.id})}" class ="btn btn-outline-primary"> Delete </a>
    
    <!--  Something Wrong with SVG, function delete does not work, when i run application, change to another button 
