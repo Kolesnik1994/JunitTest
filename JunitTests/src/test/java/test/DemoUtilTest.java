@@ -15,9 +15,11 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.condition.EnabledOnOs;
 import org.junit.jupiter.api.condition.OS;
 
+import test.other.DemoUtils;
+
 
 /*
- * Java class that testing method consist in DemoUtil.java class
+ * Java class that testing classes consist in test/other package
  * @author V.KOLESNIK
  * 
  * @TestMethodOrder - allows you to set the order in which test will executed

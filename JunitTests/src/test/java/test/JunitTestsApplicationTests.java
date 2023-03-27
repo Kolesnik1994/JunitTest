@@ -12,11 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import test.model.CollegeStudent;
-import test.model.StudentGrades;
+
+import test.other.CollegeStudent;
+import test.other.StudentGrades;
 
 /**
- * Java class that testing JunitTestsApplication.java + package test.model
+ * Java class that testing classes consist in test/other package
  * @author V.KOlESNIK
  */
 @SpringBootTest
@@ -128,6 +129,7 @@ class JunitTestsApplicationTests {
 	  }
 	
 	}
+
 
 	
 

@@ -1,4 +1,4 @@
-package test.model;
+package test.other;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -6,7 +6,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * Java Class consist method that have been tested in test/java/test/DemoUtilTest.java, JunitTestsApplicationTests, MockTest, ReflectionTestUtils
+ */
 
+@Component
 public class StudentGrades {
 	
 	List<Double> mathGradeResults;

@@ -26,7 +26,7 @@ import test.repository.ScienceGradesDao;
 import test.repository.StudentDao;
 import test.service.StudentAndGradeService;
 
-@TestPropertySource("/application.properties")
+@TestPropertySource("/application-test.properties")
 @SpringBootTest(classes = JunitTestsApplication.class)
 public class StudentAndGradeServiceTest {
 
@@ -183,8 +183,8 @@ public class StudentAndGradeServiceTest {
 	
 	@Test 
 	public void deleteNonExistStudent () {
-		assertEquals (1, studentService.deleteGrade(1, "science"));
-		assertEquals (1, studentService.deleteGrade(1, "literatur"));
+		assertEquals (0, studentService.deleteGrade(0, "science"));
+		assertEquals (0, studentService.deleteGrade(0, "literatur"));
 		
 	}
 	

@@ -36,7 +36,7 @@ import test.repository.MathGradesDao;
 import test.repository.StudentDao;
 import test.service.StudentAndGradeService;
 
-@TestPropertySource ("/application.properties")
+@TestPropertySource ("/application-test.properties")
 @AutoConfigureMockMvc
 @SpringBootTest
 public class GradebookControllerTest {

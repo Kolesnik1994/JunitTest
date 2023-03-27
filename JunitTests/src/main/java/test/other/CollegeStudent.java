@@ -1,9 +1,14 @@
-package test.model;
+package test.other;
+
+import org.springframework.stereotype.Component;
+
+import test.model.Student;
 
 /**
  * Simple POJO java class that represent entity
+ *  that have been tested in test/java/test/DemoUtilTest.java, JunitTestsApplicationTests, MockTest, ReflectionTestUtils
  */
-
+@Component
 public class CollegeStudent implements Student {
 	
 	private int id;

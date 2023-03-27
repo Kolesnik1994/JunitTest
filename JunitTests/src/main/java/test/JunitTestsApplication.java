@@ -12,6 +12,7 @@ import test.model.Grade;
 import test.model.HistoryGrade;
 import test.model.MathGrade;
 import test.model.ScienceGrade;
+import test.other.CollegeStudent;
 import test.service.ApplicationService;
 
 // Main application class
@@ -22,7 +23,12 @@ public class JunitTestsApplication {
 		SpringApplication.run(JunitTestsApplication.class, args);
 	}
 	
-	//Bean which is used in JunitTestsApplicaionTests.java class special to assert that expected and actual object do not refer to the same object 
+	//Bean which is used in JunitTestsApplicaion.java class special to assert that expected and actual object do not refer to the same object 
+	@Bean(name ="collegeStudent")
+	@Scope(value ="prototype")
+	 CollegeStudent getCollegeStudent1 () {
+		return new CollegeStudent();}
+	
 	@Bean(name ="collegeStudent")
 	@Scope(value ="prototype")
 	 CollegeStudent2 getCollegeStudent () {

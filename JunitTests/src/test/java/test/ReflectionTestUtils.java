@@ -15,8 +15,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AbstractContextLoader;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 
-import test.model.CollegeStudent;
-import test.model.StudentGrades;
+import test.other.CollegeStudent;
+import test.other.StudentGrades;
+
+/**
+ * Java class that testing classes consist in test/other package
+ */
 
 @SpringBootTest (classes = JunitTestsApplication.class)
 public class ReflectionTestUtils {

@@ -17,9 +17,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 import ch.qos.logback.core.Context;
 import test.dao.ApplicationDao;
-import test.model.CollegeStudent;
-import test.model.StudentGrades;
+import test.other.CollegeStudent;
+import test.other.StudentGrades;
 import test.service.ApplicationService;
+
+/**
+ * Java class that testing classes consist in test/other package
+ */
 
 @SpringBootTest
 public class MockTest {

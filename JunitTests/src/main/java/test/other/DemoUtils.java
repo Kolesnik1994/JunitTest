@@ -1,15 +1,15 @@
-package test;
+package test.other;
 
 import java.util.List;
 
 /**
- * Java Class consist method that have been tested in DemoUtilTest.java
- * @author JCODER 
+ * Java Class consist method that have been tested in test/java/test/DemoUtilTest.java, JunitTestsApplicationTests, MockTest, ReflectionTestUtils
+ * @author JCODER aka Vladislav Kolesnik 
  */
 
 public class DemoUtils {
 
-    private String academy = "Luv2Code Academy";
+    private String academy = "Luv2Code";
     private String academyDuplicate = academy;
     private String[] firstThreeLettersOfAlphabet = {"A", "B", "C"};
     private List<String> academyInList = List.of("luv", "2", "code");
